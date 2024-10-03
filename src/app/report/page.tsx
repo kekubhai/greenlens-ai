@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 'use client'
@@ -7,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { StandaloneSearchBox,  useJsApiLoader } from '@react-google-maps/api'
 import { Libraries } from '@react-google-maps/api';
-import { createUser, getUserByEmail, createReport, getRecentReports } from '@/utils/db/actions';
+import createUser, { createReport, getUserByEmail, getRecentReports } from '@/utils/db/action';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast'
 
@@ -128,7 +129,7 @@ export default function ReportPage() {
         }`;
 
       const result = await model.generateContent([prompt, ...imageParts]);
-      const response = await result.response;
+      const response = result.response;
       const text = response.text();
       
       try {
