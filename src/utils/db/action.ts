@@ -350,7 +350,7 @@ export async function getRewardTransactions(userId: number) {
 
     const formattedTransactions = transactions.map(t => ({
       ...t,
-      date: t.date.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+      date: t.date.toISOString().split('T')[0], 
     }));
 
     console.log('Formatted transactions:', formattedTransactions)

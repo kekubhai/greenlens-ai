@@ -1,22 +1,23 @@
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
-import { useState, useEffect } from "react"
+import { useState, useEffect, Key, ReactElement, ReactNode } from "react"
 import Link from "next/link"
 import { usePathname } from 'next/navigation'
 import { Button } from "@/components/ui/button"
-import { Menu, Coins, Leaf, Search, Bell, User, ChevronDown, LogIn,  } from "lucide-react"
+import { Menu, Coins, Leaf, Search, Bell, User, ChevronDown, LogIn } from "lucide-react"
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu"
+import useMediaQuery from "use-media"
 import { Badge } from "@/components/ui/badge"
-import {Web3Auth} from "@web3auth/modal"
+import { Web3Auth } from "@web3auth/modal"
 import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base"
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider"
 
-import { createUser, getUnreadNotifications, markNotificationAsRead, getUserByEmail, getUserBalance } from "@/utils/db/actions"
+import createUser, { markNotificationAsRead } from "@/utils/db/action"
 
 const clientId = process.env.WEB3_AUTH_CLIENT_ID
 
@@ -35,9 +36,11 @@ const privateKeyProvider = new EthereumPrivateKeyProvider({
   config: { chainConfig },
 });
 
+
+
 const web3auth = new Web3Auth({
   clientId,
-  web3AuthNetwork: WEB3AUTH_NETWORK.TESTNET, // Changed from SAPPHIRE_MAINNET to TESTNET
+  web3AuthNetwork: WEB3AUTH_NETWORK.TESTNET,
   privateKeyProvider,
 });
 
@@ -52,12 +55,16 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState<any>(null);
   const pathname = usePathname()
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<any[]>([]);
   const isMobile = useMediaQuery("(max-width: 768px)")
-  const [balance, setBalance] = useState(0)
+  const [balance, setBalance] = useState(0);
+  const [darkMode, setDarkMode] = useState(false);
 
-  console.log('user info', userInfo);
-  
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+    document.body.classList.toggle("dark", !darkMode);
+  };
+
   useEffect(() => {
     const init = async () => {
       try {
@@ -70,12 +77,7 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
           setUserInfo(user);
           if (user.email) {
             localStorage.setItem('userEmail', user.email);
-            try {
-              await createUser(user.email, user.name || 'Anonymous User');
-            } catch (error) {
-              console.error("Error creating user:", error);
-              // Handle the error appropriately, maybe show a message to the user
-            }
+            await createUser(user.email, user.name || 'Anonymous User');
           }
         }
       } catch (error) {
@@ -90,7 +92,7 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      if (userInfo && userInfo.email) {
+      if (userInfo?.email) {
         const user = await getUserByEmail(userInfo.email);
         if (user) {
           const unreadNotifications = await getUnreadNotifications(user.id);
@@ -100,16 +102,14 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
     };
 
     fetchNotifications();
-
-    // Set up periodic checking for new notifications
-    const notificationInterval = setInterval(fetchNotifications, 30000); // Check every 30 seconds
+    const notificationInterval = setInterval(fetchNotifications, 30000);
 
     return () => clearInterval(notificationInterval);
   }, [userInfo]);
 
   useEffect(() => {
     const fetchUserBalance = async () => {
-      if (userInfo && userInfo.email) {
+      if (userInfo?.email) {
         const user = await getUserByEmail(userInfo.email);
         if (user) {
           const userBalance = await getUserBalance(user.id);
@@ -119,8 +119,7 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
     };
 
     fetchUserBalance();
-
-    // Add an event listener for balance updates
+    
     const handleBalanceUpdate = (event: CustomEvent) => {
       setBalance(event.detail);
     };
@@ -145,12 +144,7 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
       setUserInfo(user);
       if (user.email) {
         localStorage.setItem('userEmail', user.email);
-        try {
-          await createUser(user.email, user.name || 'Anonymous User');
-        } catch (error) {
-          console.error("Error creating user:", error);
-          // Handle the error appropriately, maybe show a message to the user
-        }
+        await createUser(user.email, user.name || 'Anonymous User');
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -173,22 +167,6 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
     }
   };
 
-  const getUserInfo = async () => {
-    if (web3auth.connected) {
-      const user = await web3auth.getUserInfo();
-      setUserInfo(user);
-      if (user.email) {
-        localStorage.setItem('userEmail', user.email);
-        try {
-          await createUser(user.email, user.name || 'Anonymous User');
-        } catch (error) {
-          console.error("Error creating user:", error);
-          // Handle the error appropriately, maybe show a message to the user
-        }
-      }
-    }
-  };
-
   const handleNotificationClick = async (notificationId: number) => {
     await markNotificationAsRead(notificationId);
     setNotifications(prevNotifications => 
@@ -201,16 +179,16 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
   }
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header className={`bg-white border-b border-gray-200 sticky top-0 z-50 ${darkMode ? 'bg-gray-800 text-white' : ''}`}>
       <div className="flex items-center justify-between px-4 py-2">
         <div className="flex items-center">
-          <Button variant="ghost" size="icon" className="mr-2 md:mr-4" onClick={onMenuClick}>
+          <Button variant="ghost" size="icon" className="mr-2 md:mr-4 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={onMenuClick}>
             <Menu className="h-6 w-6" />
           </Button>
           <Link href="/" className="flex items-center">
-            <Leaf className="h-6 w-6 md:h-8 md:w-8 text-green-500 mr-1 md:mr-2" />
+            <Leaf className="h-6 w-6 md:h-8 md:w-8 text-green-800 mr-1 md:mr-2" />
             <div className="flex flex-col">
-              <span className="font-bold text-base md:text-lg text-gray-800">Zero2Hero</span>
+              <span className="font-bold text-base md:text-lg text-gray-800 dark:text-gray-200">GreenLens-AI</span>
               <span className="text-[8px] md:text-[10px] text-gray-500 -mt-1">ETHOnline24</span>
             </div>
           </Link>
@@ -229,13 +207,13 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
         )}
         <div className="flex items-center">
           {isMobile && (
-            <Button variant="ghost" size="icon" className="mr-2">
+            <Button variant="ghost" size="icon" className="mr-2 hover:bg-gray-200 dark:hover:bg-gray-700">
               <Search className="h-5 w-5" />
             </Button>
           )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="mr-2 relative">
+              <Button variant="ghost" size="icon" className="mr-2 relative hover:bg-gray-200 dark:hover:bg-gray-700">
                 <Bell className="h-5 w-5" />
                 {notifications.length > 0 && (
                   <Badge className="absolute -top-1 -right-1 px-1 min-w-[1.2rem] h-5">
@@ -264,25 +242,28 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
           </DropdownMenu>
           <div className="mr-2 md:mr-4 flex items-center bg-gray-100 rounded-full px-2 md:px-3 py-1">
             <Coins className="h-4 w-4 md:h-5 md:w-5 mr-1 text-green-500" />
-            <span className="font-semibold text-sm md:text-base text-gray-800">
+            <span className="font-semibold text-sm md:text-base text-gray-800 dark:text-gray-200">
               {balance.toFixed(2)}
             </span>
           </div>
           {!loggedIn ? (
-            <Button onClick={login} className="bg-green-600 hover:bg-green-700 text-white text-sm md:text-base">
+            <Button 
+              onClick={login} 
+              className="bg-green-600 hover:bg-green-700 text-white text-sm md:text-base"
+            >
               Login
               <LogIn className="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5" />
             </Button>
           ) : (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="flex items-center">
+                <Button variant="ghost" size="icon" className="flex items-center hover:bg-gray-200 dark:hover:bg-gray-700">
                   <User className="h-5 w-5 mr-1" />
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={getUserInfo}>
+                <DropdownMenuItem onClick={setUserInfo}>
                   {userInfo ? userInfo.name : "Fetch User Info"}
                 </DropdownMenuItem>
                 <DropdownMenuItem>
@@ -293,6 +274,12 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
               </DropdownMenuContent>
             </DropdownMenu>
           )}
+          <button 
+            onClick={toggleTheme} 
+            className={`ml-4 p-2 rounded-full ${darkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-800'} hover:bg-gray-300 dark:hover:bg-gray-600`}
+          >
+            {darkMode ? 'Light Mode' : 'Dark Mode'}
+          </button>
         </div>
       </div>
     </header>
