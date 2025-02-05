@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from './dbConfig';
 import { Users, Reports, Rewards, CollectedWastes, Notifications, Transactions } from './schema';
 import { eq, sql, and, desc } from 'drizzle-orm';
@@ -29,7 +30,7 @@ export async function createReport(
   amount: string,
   imageUrl?: string,
   type?: string,
-  verificationResult?: any
+  verificationResult?: unknown
 ) {
   try {
     const [report] = await db
@@ -268,7 +269,7 @@ export async function saveReward(userId: number, amount: number) {
   }
 }
 
-export async function saveCollectedWaste(reportId: number, collectorId: number, verificationResult: any) {
+export async function saveCollectedWaste(reportId: number, collectorId: number) {
   try {
     const [collectedWaste] = await db
       .insert(CollectedWastes)

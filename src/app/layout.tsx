@@ -3,6 +3,7 @@ import Header from "@/components/Header"
 import { useState, useEffect } from "react"
 import { Inter } from 'next/font/google'
 import "./globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
 
 import Sidebar from "@/components/Sidebar"
 
@@ -28,7 +29,7 @@ export default function RootLayout({
           console.log('user from layout', user);
           
           if (user) {
-            const availableRewards = await getAvailableRewards(user.id) as any
+            const availableRewards = await getAvailableRewards(user.id) as unknown
             console.log('availableRewards from layout', availableRewards);
                         setTotalEarnings(availableRewards)
           }
@@ -37,13 +38,14 @@ export default function RootLayout({
         console.error('Error fetching total earnings:', error)
       }
     }
-
     fetchTotalEarnings()
   }, [])
 
   return (
+    
     <html lang="en">
       <body className={inter.className}>
+      <ThemeProvider>
         <div className="min-h-screen bg-gray-50 flex flex-col">
           <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} totalEarnings={totalEarnings} />
           <div className="flex flex-1">
@@ -54,6 +56,7 @@ export default function RootLayout({
           </div>
         </div>
         <Toaster />
+    </ThemeProvider>
       </body>
     </html>
   )

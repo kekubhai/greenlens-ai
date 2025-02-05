@@ -6,7 +6,7 @@ import { ArrowRight, Leaf, Recycle, Users, Coins, MapPin, ChevronRight } from 'l
 import { Button } from '@/components/ui/button'
 import { Poppins } from 'next/font/google'
 import Link from 'next/link'
-import ContractInteraction from '@/components/ContractInteractionn'
+
 import { getRecentReports, getWasteCollectionTasks } from '@/utils/db/action'
 const poppins = Poppins({ 
   weight: ['300', '400', '600'],
@@ -50,7 +50,7 @@ export default function Home() {
         }, 0);
 
         const reportsSubmitted = reports.length;
-        const tokensEarned = rewards.reduce((total, reward) => total + (reward.points || 0), 0);
+        const tokensEarned = reports.reduce((total, report) => total + (report.points || 0), 0);
         const co2Offset = wasteCollected * 0.5;   
 
         setImpactData({
@@ -63,7 +63,7 @@ export default function Home() {
         console.error("Error fetching impact data:", error);
         
         setImpactData({
-          wasteCollected: 0,
+          wasteCollected: 0.6,
           reportsSubmitted: 0,
           tokensEarned: 0,
           co2Offset: 0
