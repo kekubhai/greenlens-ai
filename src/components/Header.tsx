@@ -39,7 +39,7 @@ const privateKeyProvider = new EthereumPrivateKeyProvider({
 
 const web3auth = new Web3Auth({
   clientId,
-  web3AuthNetwork: WEB3AUTH_NETWORK.TESTNET, // Changed from SAPPHIRE_MAINNET to TESTNET
+  web3AuthNetwork: WEB3AUTH_NETWORK.TESTNET, 
   privateKeyProvider,
 });
 
@@ -76,7 +76,7 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
               await createUser(user.email, user.name || 'Anonymous User');
             } catch (error) {
               console.error("Error creating user:", error);
-              // Handle the error appropriately, maybe show a message to the user
+        
             }
           }
         }
