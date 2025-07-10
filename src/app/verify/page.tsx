@@ -47,27 +47,27 @@ export default function VerifyWastePage() {
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8 text-gray-800">Verify Waste Collection</h1>
+      <h1 className="text-3xl font-bold mb-8 text-foreground">Verify Waste Collection</h1>
       
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-md mb-8">
+      <form onSubmit={handleSubmit} className="bg-card p-6 rounded-xl shadow-md mb-8 border border-border">
         <div className="mb-6">
-          <label htmlFor="waste-image" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="waste-image" className="block text-sm font-medium text-foreground mb-2">
             Upload Waste Image
           </label>
-          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-border rounded-md">
             <div className="space-y-1 text-center">
-              <Upload className="mx-auto h-12 w-12 text-gray-400" />
-              <div className="flex text-sm text-gray-600">
+              <Upload className="mx-auto h-12 w-12 text-muted-foreground" />
+              <div className="flex text-sm text-muted-foreground">
                 <label
                   htmlFor="waste-image"
-                  className="relative cursor-pointer bg-white rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500"
+                  className="relative cursor-pointer bg-card rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500"
                 >
                   <span>Upload a file</span>
                   <input id="waste-image" name="waste-image" type="file" className="sr-only" onChange={handleFileChange} accept="image/*" />
                 </label>
                 <p className="pl-1">or drag and drop</p>
               </div>
-              <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+              <p className="text-xs text-muted-foreground">PNG, JPG, GIF up to 10MB</p>
             </div>
           </div>
         </div>
@@ -89,14 +89,14 @@ export default function VerifyWastePage() {
       </form>
 
       {verificationStatus === 'success' && verificationResult && (
-        <div className="bg-green-50 border-l-4 border-green-400 p-4 mb-8">
+        <div className="bg-green-50 dark:bg-green-900/20 border-l-4 border-green-400 p-4 mb-8">
           <div className="flex">
             <div className="flex-shrink-0">
               <CheckCircle className="h-5 w-5 text-green-400" />
             </div>
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-green-800">Verification Successful</h3>
-              <div className="mt-2 text-sm text-green-700">
+              <h3 className="text-sm font-medium text-green-800 dark:text-green-200">Verification Successful</h3>
+              <div className="mt-2 text-sm text-green-700 dark:text-green-300">
                 <p>Waste Type: {verificationResult.wasteType}</p>
                 <p>Quantity: {verificationResult.quantity}</p>
                 <p>Confidence: {(verificationResult.confidence * 100).toFixed(2)}%</p>
@@ -107,14 +107,14 @@ export default function VerifyWastePage() {
       )}
 
       {verificationStatus === 'failure' && (
-        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-8">
+        <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-400 p-4 mb-8">
           <div className="flex">
             <div className="flex-shrink-0">
               <XCircle className="h-5 w-5 text-red-400" />
             </div>
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-red-800">Verification Failed</h3>
-              <div className="mt-2 text-sm text-red-700">
+              <h3 className="text-sm font-medium text-red-800 dark:text-red-200">Verification Failed</h3>
+              <div className="mt-2 text-sm text-red-700 dark:text-red-300">
                 <p>Unable to verify the waste. Please try again with a clearer image.</p>
               </div>
             </div>

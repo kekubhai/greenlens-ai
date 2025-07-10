@@ -29,9 +29,9 @@ export default function RootLayout({
           console.log('user from layout', user);
           
           if (user) {
-            const availableRewards = await getAvailableRewards(user.id) as unknown
+            const availableRewards = await getAvailableRewards(user.id)
             console.log('availableRewards from layout', availableRewards);
-                        setTotalEarnings(availableRewards)
+            setTotalEarnings(Number(availableRewards))
           }
         }
       } catch (error) {
@@ -43,10 +43,15 @@ export default function RootLayout({
 
   return (
     
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-      <ThemeProvider>
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <div className="min-h-screen bg-background flex flex-col">
           <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} totalEarnings={totalEarnings} />
           <div className="flex flex-1">
             <Sidebar open={sidebarOpen} />

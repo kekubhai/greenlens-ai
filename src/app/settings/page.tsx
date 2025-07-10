@@ -37,11 +37,11 @@ export default function SettingsPage() {
 
   return (
     <div className="p-8 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-semibold mb-6 text-gray-800">Account Settings</h1>
+      <h1 className="text-3xl font-semibold mb-6 text-foreground">Account Settings</h1>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+          <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1">Full Name</label>
           <div className="relative">
             <input
               type="text"
@@ -49,14 +49,14 @@ export default function SettingsPage() {
               name="name"
               value={settings.name}
               onChange={handleInputChange}
-              className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+              className="pl-10 w-full px-4 py-2 border border-input bg-background text-foreground rounded-md focus:ring-green-500 focus:border-green-500"
             />
-            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={18} />
           </div>
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+          <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">Email Address</label>
           <div className="relative">
             <input
               type="email"
@@ -64,14 +64,14 @@ export default function SettingsPage() {
               name="email"
               value={settings.email}
               onChange={handleInputChange}
-              className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+              className="pl-10 w-full px-4 py-2 border border-input bg-background text-foreground rounded-md focus:ring-green-500 focus:border-green-500"
             />
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={18} />
           </div>
         </div>
 
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+          <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-1">Phone Number</label>
           <div className="relative">
             <input
               type="tel"
@@ -79,14 +79,14 @@ export default function SettingsPage() {
               name="phone"
               value={settings.phone}
               onChange={handleInputChange}
-              className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+              className="pl-10 w-full px-4 py-2 border border-input bg-background text-foreground rounded-md focus:ring-green-500 focus:border-green-500"
             />
-            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={18} />
           </div>
         </div>
 
         <div>
-          <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+          <label htmlFor="address" className="block text-sm font-medium text-foreground mb-1">Address</label>
           <div className="relative">
             <input
               type="text"
@@ -94,9 +94,9 @@ export default function SettingsPage() {
               name="address"
               value={settings.address}
               onChange={handleInputChange}
-              className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+              className="pl-10 w-full px-4 py-2 border border-input bg-background text-foreground rounded-md focus:ring-green-500 focus:border-green-500"
             />
-            <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={18} />
           </div>
         </div>
 
@@ -107,9 +107,9 @@ export default function SettingsPage() {
             name="notifications"
             checked={settings.notifications}
             onChange={handleInputChange}
-            className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+            className="h-4 w-4 text-green-600 focus:ring-green-500 border-input rounded"
           />
-          <label htmlFor="notifications" className="ml-2 block text-sm text-gray-700">
+          <label htmlFor="notifications" className="ml-2 block text-sm text-foreground">
             Receive email notifications
           </label>
         </div>
