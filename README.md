@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+
+# GreenLens-AI
+
+## Overview
+GreenLens-AI is an innovative waste management platform powered by blockchain technology and artificial intelligence. This platform aims to revolutionize waste management by providing real-time monitoring, tracking, and optimization of waste disposal processes.
+
+## Features
+- **AI-driven Waste Recognition**: Utilizes advanced AI algorithms to detect and classify different types of waste.
+- **Blockchain Integration**: Ensures transparency and traceability of waste disposal activities.
+- **Real-time Monitoring**: Provides up-to-date information on waste levels and disposal status.
+- **Sustainability Focus**: Helps organizations and individuals manage waste more efficiently, promoting environmental sustainability.
+
+## Technologies Used
+- **Blockchain**: Ensures secure and transparent tracking of waste management processes.
+- **Artificial Intelligence**: Powers the waste recognition and classification system.
+- **TypeScript**: Core language for the platform's development.
+- **CSS**: Styling and design of the user interface.
+- **JavaScript**: Additional functionalities and interactions.
 
 ## Getting Started
+### Prerequisites
+- Node.js
+- npm (Node Package Manager)
 
-First, run the development server:
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/kekubhai/greenlens-ai.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd greenlens-ai
+   ```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Running the Application
+1. Start the development server:
+   ```bash
+   npm start
+   ```
+2. Open your browser and visit `http://localhost:3000` to see the application in action.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contributing
+We welcome contributions from the community. If you would like to contribute, please fork the repository and submit a pull request.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## License
+This project is licensed under the MIT License.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contact
+For any questions or inquiries, please contact [your email address].
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Feel free to modify this template according to your specific needs and add any additional information that might be relevant to your project.
